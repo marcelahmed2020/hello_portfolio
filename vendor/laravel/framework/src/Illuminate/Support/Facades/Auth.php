@@ -3,12 +3,12 @@
 namespace Illuminate\Support\Facades;
 
 /**
- * @method static \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard guard(string|null $name = null)
+ * @method static mixed guard(string|null $name = null)
  * @method static void shouldUse(string $name);
  * @method static bool check()
  * @method static bool guest()
  * @method static \Illuminate\Contracts\Auth\Authenticatable|null user()
- * @method static int|null id()
+ * @method static int|string|null id()
  * @method static bool validate(array $credentials = [])
  * @method static void setUser(\Illuminate\Contracts\Auth\Authenticatable $user)
  * @method static bool attempt(array $credentials = [], bool $remember = false)

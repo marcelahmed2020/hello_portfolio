@@ -1,33 +1,37 @@
 <?php
 namespace App\Http\View\Composer;
-use App\Settings;
-use App\User;
 use App\About;
-use App\Facts;
-use App\Skills;
-use App\Services;
-use App\Portfolios;
-use App\Testimonials;
-use App\Sumary;
+
 use App\Education;
-use App\ProfessionalExperience;
+use App\Experience;
+use App\Portfolios;
+use App\Price;
+use App\Services;
+use App\Settings;
+use App\Skills;
+use App\User;
 use Illuminate\View\View;
 class SettingsComposer
 {
     public function compose(View $view)
     {
-        $view->with('settings',Settings::get()->first());
-        $view->with('about',About::where('one',1)->first());
-        $view->with('facts',Facts::get());
-        $view->with('summaries',Sumary::get());
-        $view->with('educations',Education::get());
-        $view->with('portfolios',Portfolios::get());
-        $view->with('services',Services::get());
-        $view->with('testimonials',Testimonials::get());
-        $view->with('skills',Skills::get());
-        $view->with('user',User::get()->first());
-        $view->with('professionalexperiences',ProfessionalExperience::latest()->get());
+        $view->with('about_me',About::where(['one'=>1,'enabled'=>1])->get()->first());
+        $view->with('my_price',Price::where(['enabled'=>1])->get());
+        $view->with('my_portfolios',Portfolios::where(['enabled'=>1])->get());
+        $view->with('my_educations',Education::where(['enabled'=>1])->get());
+        $view->with('my_experience',Experience::where(['enabled'=>1])->get());
+        $view->with('my_serices',Services::where(['enabled'=>1])->get());
+        $view->with('skillsList',Skills::get());
 
+        $view->with('my_info',User::first());
+        $view->with('settings',Settings::get()->first());
+//        $view->with('categories',Category::get());
+//        $view->with('product_Rated',Product::where(['enabled'=>1,'ratting'=>5])->orderBy('ratting','DESC')->take(6)->get());
+//        $view->with('products_list',Product::where(['enabled'=>1])->orderBy('id','DESC')->get());
+//        $view->with('countries',Country::where(['enabled'=>1])->get());
+//        $view->with('cmspage_all',CmsPage::where(['enabled'=>1])->get());
+        // trash
+//        $view->with('categories_trash',Category::where(['enabled'=>0])->get());
 
 
     }

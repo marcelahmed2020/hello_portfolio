@@ -132,8 +132,8 @@ class Configuration
         // explicit configFile option
         if (isset($config['configFile'])) {
             $this->configFile = $config['configFile'];
-        } elseif (isset($_SERVER['PSYSH_CONFIG']) && $_SERVER['PSYSH_CONFIG']) {
-            $this->configFile = $_SERVER['PSYSH_CONFIG'];
+        } elseif ($configFile = \getenv('PSYSH_CONFIG')) {
+            $this->configFile = $configFile;
         }
 
         // legacy baseDir option
@@ -1718,7 +1718,7 @@ class Configuration
     public function inputIsPiped()
     {
         if ($this->pipedInput === null) {
-            $this->pipedInput = \defined('STDIN') && static::looksLikeAPipe(\STDIN);
+            $this->pipedInput = static::looksLikeAPipe(\STDIN);
         }
 
         return $this->pipedInput;

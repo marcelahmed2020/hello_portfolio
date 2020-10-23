@@ -384,7 +384,7 @@ class Collection extends BaseCollection implements QueueableCollection
      */
     public function makeHidden($attributes)
     {
-        return $this->each->addHidden($attributes);
+        return $this->each->makeHidden($attributes);
     }
 
     /**
@@ -396,6 +396,17 @@ class Collection extends BaseCollection implements QueueableCollection
     public function makeVisible($attributes)
     {
         return $this->each->makeVisible($attributes);
+    }
+
+    /**
+     * Append an attribute across the entire collection.
+     *
+     * @param  array|string  $attributes
+     * @return $this
+     */
+    public function append($attributes)
+    {
+        return $this->each->append($attributes);
     }
 
     /**
@@ -446,7 +457,7 @@ class Collection extends BaseCollection implements QueueableCollection
     /**
      * Zip the collection together with one or more arrays.
      *
-     * @param  mixed ...$items
+     * @param  mixed  ...$items
      * @return \Illuminate\Support\Collection
      */
     public function zip($items)
@@ -557,19 +568,7 @@ class Collection extends BaseCollection implements QueueableCollection
      */
     public function getQueueableRelations()
     {
-        if ($this->isEmpty()) {
-            return [];
-        }
-
-        $relations = $this->map->getQueueableRelations()->all();
-
-        if (count($relations) === 0 || $relations === [[]]) {
-            return [];
-        } elseif (count($relations) === 1) {
-            return array_values($relations)[0];
-        } else {
-            return array_intersect(...$relations);
-        }
+        return $this->isNotEmpty() ? $this->first()->getQueueableRelations() : [];
     }
 
     /**

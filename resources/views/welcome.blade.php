@@ -81,17 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
-                    <table>
-                    @foreach($posts as $post)
-                        <tr>
-                            <td>A: {{ $post->active }}</td>
-                            <td>N: {{ $post->name   }}</td>
-                        </tr>
-                        @endforeach
-
-
-                    </table>
+                    Laravel  @lang('site.name')
                 </div>
 
                 <div class="links">

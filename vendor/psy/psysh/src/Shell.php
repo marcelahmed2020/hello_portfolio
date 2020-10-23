@@ -19,7 +19,6 @@ use Psy\Exception\ThrowUpException;
 use Psy\Exception\TypeErrorException;
 use Psy\ExecutionLoop\ProcessForker;
 use Psy\ExecutionLoop\RunkitReloader;
-use Psy\Formatter\TraceFormatter;
 use Psy\Input\ShellInput;
 use Psy\Input\SilentInput;
 use Psy\TabCompletion\Matcher;
@@ -48,7 +47,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Shell extends Application
 {
-    const VERSION = 'v0.10.4';
+    const VERSION = 'v0.10.3';
 
     const PROMPT      = '>>> ';
     const BUFF_PROMPT = '... ';
@@ -399,13 +398,7 @@ class Shell extends Application
 
         $this->beforeRun();
         $this->loadIncludes();
-
-        // For non-interactive execution, read only from the input buffer or from piped input.
-        // Otherwise it'll try to readline and hang, waiting for user input with no indication of
-        // what's holding things up.
-        if (!empty($this->inputBuffer) || $this->config->inputIsPiped()) {
-            $this->getInput(false);
-        }
+        $this->getInput(false);
 
         if ($this->hasCode()) {
             $ret = $this->execute($this->flushCode());
@@ -1120,16 +1113,6 @@ class Shell extends Application
         }
         $output->writeln($this->formatException($e));
 
-        // Include an exception trace (as long as this isn't a BreakException).
-        if (!$e instanceof BreakException && $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $trace = TraceFormatter::formatTrace($e);
-            if (\count($trace) !== 0) {
-                $output->writeln('--');
-                $output->write($trace, true);
-                $output->writeln('');
-            }
-        }
-
         $this->resetCodeBuffer();
     }
 
@@ -1392,25 +1375,11 @@ class Shell extends Application
     /**
      * Get the current version of Psy Shell.
      *
-     * @deprecated call self::getVersionHeader instead
-     *
      * @return string
      */
     public function getVersion()
     {
-        return self::getVersionHeader($this->config->useUnicode());
-    }
-
-    /**
-     * Get a pretty header including the current version of Psy Shell.
-     *
-     * @param bool $useUnicode
-     *
-     * @return string
-     */
-    public static function getVersionHeader($useUnicode = false)
-    {
-        $separator = $useUnicode ? '—' : '-';
+        $separator = $this->config->useUnicode() ? '—' : '-';
 
         return \sprintf('Psy Shell %s (PHP %s %s %s)', self::VERSION, PHP_VERSION, $separator, PHP_SAPI);
     }

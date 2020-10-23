@@ -21,9 +21,7 @@ trait LaratrustHasScopes
 
         return $query->$method('roles', function ($roleQuery) use ($role, $team) {
             $teamsStrictCheck = Config::get('laratrust.teams_strict_check');
-            $method = is_array($role) ? 'whereIn' : 'where';
-
-            $roleQuery->$method('name', $role)
+            $roleQuery->where('name', $role)
                 ->when($team || $teamsStrictCheck, function ($query) use ($team) {
                     $team = Helper::getIdFor($team, 'team');
                     return $query->where(Helper::teamForeignKey(), $team);

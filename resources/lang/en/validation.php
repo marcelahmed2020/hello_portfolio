@@ -118,6 +118,7 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -146,6 +147,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+
+          //
+          'en' => ['name'=>'Name In English Language'],
+          'ar' => ['name'=>'Name In Arbic Language'],
+          'ru' => ['name'=>'Name In Russian Language'],
+
+    ],
 
 ];

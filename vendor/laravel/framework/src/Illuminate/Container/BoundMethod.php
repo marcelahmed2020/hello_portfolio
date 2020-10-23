@@ -3,6 +3,7 @@
 namespace Illuminate\Container;
 
 use Closure;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use InvalidArgumentException;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -157,20 +158,22 @@ class BoundMethod
     protected static function addDependencyForCallParameter($container, $parameter,
                                                             array &$parameters, &$dependencies)
     {
-        if (array_key_exists($paramName = $parameter->getName(), $parameters)) {
-            $dependencies[] = $parameters[$paramName];
+        if (array_key_exists($parameter->name, $parameters)) {
+            $dependencies[] = $parameters[$parameter->name];
 
-            unset($parameters[$paramName]);
-        } elseif (! is_null($className = Util::getParameterClassName($parameter))) {
-            if (array_key_exists($className, $parameters)) {
-                $dependencies[] = $parameters[$className];
+            unset($parameters[$parameter->name]);
+        } elseif ($parameter->getClass() && array_key_exists($parameter->getClass()->name, $parameters)) {
+            $dependencies[] = $parameters[$parameter->getClass()->name];
 
-                unset($parameters[$className]);
-            } else {
-                $dependencies[] = $container->make($className);
-            }
+            unset($parameters[$parameter->getClass()->name]);
+        } elseif ($parameter->getClass()) {
+            $dependencies[] = $container->make($parameter->getClass()->name);
         } elseif ($parameter->isDefaultValueAvailable()) {
             $dependencies[] = $parameter->getDefaultValue();
+        } elseif (! $parameter->isOptional() && ! array_key_exists($parameter->name, $parameters)) {
+            $message = "Unable to resolve dependency [{$parameter}] in class {$parameter->getDeclaringClass()->getName()}";
+
+            throw new BindingResolutionException($message);
         }
     }
 

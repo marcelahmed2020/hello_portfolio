@@ -263,20 +263,6 @@ class Event
     }
 
     /**
-     * Call all of the "after" callbacks for the event.
-     *
-     * @param  \Illuminate\Contracts\Container\Container  $container
-     * @param  int  $exitCode
-     * @return void
-     */
-    public function callAfterCallbacksWithExitCode(Container $container, $exitCode)
-    {
-        $this->exitCode = (int) $exitCode;
-
-        $this->callAfterCallbacks($container);
-    }
-
-    /**
      * Build the command string.
      *
      * @return string
@@ -576,7 +562,7 @@ class Event
     {
         return function (Container $container, HttpClient $http) use ($url) {
             try {
-                $http->get($url);
+                $http->request('GET', $url);
             } catch (ClientExceptionInterface | TransferException $e) {
                 $container->make(ExceptionHandler::class)->report($e);
             }

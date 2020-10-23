@@ -1,4 +1,11 @@
 <?php return array (
+  'astrotomic/laravel-translatable' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Astrotomic\\Translatable\\TranslatableServiceProvider',
+    ),
+  ),
   'facade/ignition' => 
   array (
     'providers' => 
@@ -17,6 +24,13 @@
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
+  'fruitcake/laravel-cors' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Fruitcake\\Cors\\CorsServiceProvider',
+    ),
+  ),
   'intervention/image' => 
   array (
     'providers' => 
@@ -33,6 +47,17 @@
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    ),
+  ),
+  'mcamara/laravel-localization' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'LaravelLocalization' => 'Mcamara\\LaravelLocalization\\Facades\\LaravelLocalization',
     ),
   ),
   'nesbot/carbon' => 

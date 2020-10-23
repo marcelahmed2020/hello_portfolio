@@ -1,21 +1,28 @@
 <?php
+
 return [
     'role_structure' => [
-        'super_admin' => [
-            'admins'      => 'c,r,u,d',
-            'users'       => 'c,r,u,d',
-            'skills'      => 'c,r,u,d',
-            'about'       => 'c,r,u,d',
-            'resume'      => 'c,r,u,d',
-            'portfolio'   => 'c,r,u,d',
-            'services'    => 'c,r,u,d',
-            'settings'    => 'c,r,u,d',
-            'trash'       => 'c,r,u,d',
+        'superadministrator' => [
+            'users' => 'c,r,u,d',
+            'admins' => 'c,r,u,d',
+            'aboutus' => 'c,r,u,d',
+            'resume' => 'c,r,u,d',
+            'portfolio' => 'c,r,u,d',
+            'services' => 'c,r,u,d',
+            'contact' => 'c,r,u,d',
+            'settings' => 'c,r,u,d',
+            'subscribe' => 'c,r,u,d',
+            'trash' => 'c,r,u,d'
         ],
-        'admin' => [],
-        'author' => [],
+        'administrator' => [],
         'editor' => [],
+        'author' => [],
     ],
+//    'permission_structure' => [
+//        'cru_user' => [
+//            'profile' => 'c,r,u'
+//        ],
+//    ],
     'permissions_map' => [
         'c' => 'create',
         'r' => 'read',

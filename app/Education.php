@@ -2,9 +2,16 @@
 
 namespace App;
 
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 class Education extends Model
 {
-    protected $guarded = [];
+    use Translatable;
+    public $translatedAttributes = ['title','sub_title','desc'];
+    protected $guarded =[];
+    public function users()
+    {
+        return $this->morphToMany(\App\User::class, 'userable');
+    }
 }
