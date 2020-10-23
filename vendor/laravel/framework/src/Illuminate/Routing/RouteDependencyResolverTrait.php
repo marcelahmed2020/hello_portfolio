@@ -3,6 +3,7 @@
 namespace Illuminate\Routing;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Reflector;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
 use ReflectionParameter;
@@ -41,12 +42,12 @@ trait RouteDependencyResolverTrait
 
         $values = array_values($parameters);
 
-        $skippableValue = new \stdClass;
-
         foreach ($reflector->getParameters() as $key => $parameter) {
-            $instance = $this->transformDependency($parameter, $parameters, $skippableValue);
+            $instance = $this->transformDependency(
+                $parameter, $parameters
+            );
 
-            if ($instance !== $skippableValue) {
+            if (! is_null($instance)) {
                 $instanceCount++;
 
                 $this->spliceIntoParameters($parameters, $key, $instance);
@@ -64,23 +65,20 @@ trait RouteDependencyResolverTrait
      *
      * @param  \ReflectionParameter  $parameter
      * @param  array  $parameters
-     * @param  object  $skippableValue
      * @return mixed
      */
-    protected function transformDependency(ReflectionParameter $parameter, $parameters, $skippableValue)
+    protected function transformDependency(ReflectionParameter $parameter, $parameters)
     {
-        $class = $parameter->getClass();
+        $className = Reflector::getParameterClassName($parameter);
 
         // If the parameter has a type-hinted class, we will check to see if it is already in
         // the list of parameters. If it is we will just skip it as it is probably a model
         // binding and we do not want to mess with those; otherwise, we resolve it here.
-        if ($class && ! $this->alreadyInParameters($class->name, $parameters)) {
+        if ($className && ! $this->alreadyInParameters($className, $parameters)) {
             return $parameter->isDefaultValueAvailable()
-                        ? null
-                        : $this->container->make($class->name);
+                ? $parameter->getDefaultValue()
+                : $this->container->make($className);
         }
-
-        return $skippableValue;
     }
 
     /**

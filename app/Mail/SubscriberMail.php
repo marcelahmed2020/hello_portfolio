@@ -29,6 +29,6 @@ class SubscriberMail extends Mailable
      */
     public function build()
     {
-        return $this->view('dashboard.email.subscribes');
+        return $this->view('admin.email.subscribes');
     }
 }

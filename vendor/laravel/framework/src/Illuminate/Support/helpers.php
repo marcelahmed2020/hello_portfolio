@@ -130,7 +130,7 @@ if (! function_exists('data_get')) {
      * Get an item from an array or object using "dot" notation.
      *
      * @param  mixed  $target
-     * @param  string|array|int|null  $key
+     * @param  string|array|int  $key
      * @param  mixed  $default
      * @return mixed
      */
@@ -142,13 +142,7 @@ if (! function_exists('data_get')) {
 
         $key = is_array($key) ? $key : explode('.', $key);
 
-        foreach ($key as $i => $segment) {
-            unset($key[$i]);
-
-            if (is_null($segment)) {
-                return $target;
-            }
-
+        while (! is_null($segment = array_shift($key))) {
             if ($segment === '*') {
                 if ($target instanceof Collection) {
                     $target = $target->all();
@@ -316,7 +310,7 @@ if (! function_exists('object_get')) {
      * Get an item from an object using "dot" notation.
      *
      * @param  object  $object
-     * @param  string|null  $key
+     * @param  string  $key
      * @param  mixed  $default
      * @return mixed
      */
@@ -382,7 +376,7 @@ if (! function_exists('retry')) {
      * @param  int  $times
      * @param  callable  $callback
      * @param  int  $sleep
-     * @param  callable|null  $when
+     * @param  callable  $when
      * @return mixed
      *
      * @throws \Exception

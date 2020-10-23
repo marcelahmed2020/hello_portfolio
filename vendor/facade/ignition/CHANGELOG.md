@@ -2,16 +2,13 @@
 
 All notable changes to `ignition` will be documented in this file
 
-## 2.0.1 - 2020-03-18
+## 1.16.3 - 2020-07-13
 
-- fix execute solution route not defined (#265)
+- do not use missing package solution provider by default (closes #179)
 
-## 2.0.0 - 2020-02-02
+## 1.16.2 - 2020-07-12
 
-- adds support for Laravel 7
-- drop support for Laravel 6 and below
-- git information won't be collected by default anymore (if you need this set `collect_git_information` to `true` in the `flare` config file)
-- `MissingPackageSolutionProvider` was added to the `ignored_solution_providers` because it potentially could be slow.
+- remove ability to fix variable names
 
 ## 1.16.0 - 2020-01-21
 

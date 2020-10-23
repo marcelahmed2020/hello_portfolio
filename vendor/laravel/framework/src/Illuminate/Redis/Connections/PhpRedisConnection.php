@@ -22,15 +22,24 @@ class PhpRedisConnection extends Connection implements ConnectionContract
     protected $connector;
 
     /**
+     * The connection configuration array.
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
      * Create a new PhpRedis connection.
      *
      * @param  \Redis  $client
      * @param  callable|null  $connector
+     * @param  array  $config
      * @return void
      */
-    public function __construct($client, callable $connector = null)
+    public function __construct($client, callable $connector = null, array $config = [])
     {
         $this->client = $client;
+        $this->config = $config;
         $this->connector = $connector;
     }
 
@@ -295,10 +304,10 @@ class PhpRedisConnection extends Connection implements ConnectionContract
     }
 
     /**
-     * Scans all keys based on options.
+     * Scans the all keys based on options.
      *
-     * @param  mixed  $cursor
-     * @param  array  $options
+     * @param mixed $cursor
+     * @param array $options
      * @return mixed
      */
     public function scan($cursor, $options = [])
@@ -314,9 +323,9 @@ class PhpRedisConnection extends Connection implements ConnectionContract
     /**
      * Scans the given set for all values based on options.
      *
-     * @param  string  $key
-     * @param  mixed  $cursor
-     * @param  array  $options
+     * @param string $key
+     * @param mixed $cursor
+     * @param array $options
      * @return mixed
      */
     public function zscan($key, $cursor, $options = [])
@@ -330,11 +339,11 @@ class PhpRedisConnection extends Connection implements ConnectionContract
     }
 
     /**
-     * Scans the given hash for all values based on options.
+     * Scans the given set for all values based on options.
      *
-     * @param  string  $key
-     * @param  mixed  $cursor
-     * @param  array  $options
+     * @param string $key
+     * @param mixed $cursor
+     * @param array $options
      * @return mixed
      */
     public function hscan($key, $cursor, $options = [])
@@ -350,9 +359,9 @@ class PhpRedisConnection extends Connection implements ConnectionContract
     /**
      * Scans the given set for all values based on options.
      *
-     * @param  string  $key
-     * @param  mixed  $cursor
-     * @param  array  $options
+     * @param string $key
+     * @param mixed $cursor
+     * @param array $options
      * @return mixed
      */
     public function sscan($key, $cursor, $options = [])
@@ -476,7 +485,13 @@ class PhpRedisConnection extends Connection implements ConnectionContract
         }
 
         foreach ($this->client->_masters() as [$host, $port]) {
-            tap(new Redis)->connect($host, $port)->flushDb();
+            $redis = tap(new Redis)->connect($host, $port);
+
+            if (isset($this->config['password']) && ! empty($this->config['password'])) {
+                $redis->auth($this->config['password']);
+            }
+
+            $redis->flushDb();
         }
     }
 

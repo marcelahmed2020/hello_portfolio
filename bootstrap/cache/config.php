@@ -1,16 +1,16 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Laravel',
+    'name' => 'devmarcel',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
     'asset_url' => NULL,
     'timezone' => 'UTC',
-    'locale' => 'ru',
-    'fallback_locale' => 'ru',
-    'faker_locale' => 'ru_RU',
-    'key' => 'base64:jxkSAv3YQfkIUchf7SMQ3SQ8wuz72MRh3H5KSf3pstE=',
+    'locale' => 'en',
+    'fallback_locale' => 'en',
+    'faker_locale' => 'en_US',
+    'key' => 'base64:EBYt3bss0qQbqxxlM/aLdU4JstlGYqbG2q/yV3AGmdA=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -40,6 +40,10 @@
       23 => 'App\\Providers\\AuthServiceProvider',
       24 => 'App\\Providers\\EventServiceProvider',
       25 => 'App\\Providers\\RouteServiceProvider',
+      26 => 'App\\Providers\\RepositoryServiceProvider',
+      27 => 'Laratrust\\LaratrustServiceProvider',
+      28 => 'Yoeunes\\Toastr\\ToastrServiceProvider',
+      29 => 'Intervention\\Image\\ImageServiceProvider',
     ),
     'aliases' => 
     array (
@@ -60,7 +64,6 @@
       'File' => 'Illuminate\\Support\\Facades\\File',
       'Gate' => 'Illuminate\\Support\\Facades\\Gate',
       'Hash' => 'Illuminate\\Support\\Facades\\Hash',
-      'Http' => 'Illuminate\\Support\\Facades\\Http',
       'Lang' => 'Illuminate\\Support\\Facades\\Lang',
       'Log' => 'Illuminate\\Support\\Facades\\Log',
       'Mail' => 'Illuminate\\Support\\Facades\\Mail',
@@ -79,6 +82,8 @@
       'URL' => 'Illuminate\\Support\\Facades\\URL',
       'Validator' => 'Illuminate\\Support\\Facades\\Validator',
       'View' => 'Illuminate\\Support\\Facades\\View',
+      'Laratrust' => 'Laratrust\\LaratrustFacade',
+      'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
   'auth' => 
@@ -166,7 +171,6 @@
       'array' => 
       array (
         'driver' => 'array',
-        'serialize' => false,
       ),
       'database' => 
       array (
@@ -177,7 +181,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\framework/cache/data',
+        'path' => 'E:\\projects\\mp_works\\devmarcel\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -216,34 +220,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'laravel_cache',
-  ),
-  'cors' => 
-  array (
-    'paths' => 
-    array (
-      0 => 'api/*',
-    ),
-    'allowed_methods' => 
-    array (
-      0 => '*',
-    ),
-    'allowed_origins' => 
-    array (
-      0 => '*',
-    ),
-    'allowed_origins_patterns' => 
-    array (
-    ),
-    'allowed_headers' => 
-    array (
-      0 => '*',
-    ),
-    'exposed_headers' => 
-    array (
-    ),
-    'max_age' => 0,
-    'supports_credentials' => false,
+    'prefix' => 'devmarcel_cache',
   ),
   'database' => 
   array (
@@ -254,7 +231,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'marcel7',
+        'database' => 'devmarcel',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -264,7 +241,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'marcel7',
+        'database' => 'devmarcel',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -284,7 +261,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'marcel7',
+        'database' => 'devmarcel',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -299,7 +276,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'marcel7',
+        'database' => 'devmarcel',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -314,7 +291,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'laravel_database_',
+        'prefix' => 'devmarcel_database_',
       ),
       'default' => 
       array (
@@ -343,12 +320,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\app',
+        'root' => 'E:\\projects\\mp_works\\devmarcel\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\app/public',
+        'root' => 'E:\\projects\\mp_works\\devmarcel\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -360,12 +337,7 @@
         'region' => 'us-east-1',
         'bucket' => '',
         'url' => NULL,
-        'endpoint' => NULL,
       ),
-    ),
-    'links' => 
-    array (
-      'C:\\xampp\\htdocs\\laravel\\New\\public\\storage' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -381,10 +353,6 @@
       'threads' => 2,
       'time' => 2,
     ),
-  ),
-  'image' => 
-  array (
-    'driver' => 'gd',
   ),
   'laratrust' => 
   array (
@@ -451,26 +419,25 @@
   array (
     'role_structure' => 
     array (
-      'superadministrator' => 
+      'super_admin' => 
       array (
-        'users' => 'c,r,u,d',
         'admins' => 'c,r,u,d',
-        'aboutus' => 'c,r,u,d',
+        'users' => 'c,r,u,d',
+        'skills' => 'c,r,u,d',
+        'about' => 'c,r,u,d',
         'resume' => 'c,r,u,d',
         'portfolio' => 'c,r,u,d',
         'services' => 'c,r,u,d',
-        'contact' => 'c,r,u,d',
         'settings' => 'c,r,u,d',
-        'subscribe' => 'c,r,u,d',
         'trash' => 'c,r,u,d',
       ),
-      'administrator' => 
-      array (
-      ),
-      'editor' => 
+      'admin' => 
       array (
       ),
       'author' => 
+      array (
+      ),
+      'editor' => 
       array (
       ),
     ),
@@ -480,46 +447,6 @@
       'r' => 'read',
       'u' => 'update',
       'd' => 'delete',
-    ),
-  ),
-  'laravellocalization' => 
-  array (
-    'supportedLocales' => 
-    array (
-      'en' => 
-      array (
-        'name' => 'English',
-        'script' => 'Latn',
-        'native' => 'English',
-        'regional' => 'en_GB',
-      ),
-      'ru' => 
-      array (
-        'name' => 'Russian',
-        'script' => 'Cyrl',
-        'native' => 'русский',
-        'regional' => 'ru_RU',
-      ),
-      'ar' => 
-      array (
-        'name' => 'Arabic',
-        'script' => 'Arab',
-        'native' => 'العربية',
-        'regional' => 'ar_AE',
-      ),
-    ),
-    'useAcceptLanguageHeader' => true,
-    'hideDefaultLocaleInURL' => false,
-    'localesOrder' => 
-    array (
-    ),
-    'localesMapping' => 
-    array (
-    ),
-    'utf8suffix' => '.UTF-8',
-    'urlsIgnored' => 
-    array (
-      0 => '/skipped',
     ),
   ),
   'logging' => 
@@ -539,13 +466,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\logs/laravel.log',
+        'path' => 'E:\\projects\\mp_works\\devmarcel\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\logs/laravel.log',
+        'path' => 'E:\\projects\\mp_works\\devmarcel\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -595,65 +522,33 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\logs/laravel.log',
+        'path' => 'E:\\projects\\mp_works\\devmarcel\\storage\\logs/laravel.log',
       ),
     ),
   ),
   'mail' => 
   array (
-    'default' => 'smtp',
-    'mailers' => 
-    array (
-      'smtp' => 
-      array (
-        'transport' => 'smtp',
-        'host' => 'smtp.gmail.com',
-        'port' => '587',
-        'encryption' => 'tls',
-        'username' => 'relagalex@gmail.com',
-        'password' => 'rame@@@123456',
-        'timeout' => NULL,
-      ),
-      'ses' => 
-      array (
-        'transport' => 'ses',
-      ),
-      'mailgun' => 
-      array (
-        'transport' => 'mailgun',
-      ),
-      'postmark' => 
-      array (
-        'transport' => 'postmark',
-      ),
-      'sendmail' => 
-      array (
-        'transport' => 'sendmail',
-        'path' => '/usr/sbin/sendmail -bs',
-      ),
-      'log' => 
-      array (
-        'transport' => 'log',
-        'channel' => NULL,
-      ),
-      'array' => 
-      array (
-        'transport' => 'array',
-      ),
-    ),
+    'driver' => 'smtp',
+    'host' => 'smtp.googlemail.com',
+    'port' => '465',
     'from' => 
     array (
-      'address' => 'hello@example.com',
-      'name' => 'Example',
+      'address' => 'devmarcel@gmail.com',
+      'name' => 'Dev Marcel',
     ),
+    'encryption' => 'ssl',
+    'username' => 'relagalex@gmail.com',
+    'password' => 'info123NEW',
+    'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\laravel\\New\\resources\\views/vendor/mail',
+        0 => 'E:\\projects\\mp_works\\devmarcel\\resources\\views/vendor/mail',
       ),
     ),
+    'log_channel' => NULL,
   ),
   'queue' => 
   array (
@@ -686,7 +581,6 @@
         'secret' => '',
         'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
         'queue' => 'your-queue-name',
-        'suffix' => NULL,
         'region' => 'us-east-1',
       ),
       'redis' => 
@@ -730,7 +624,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\framework/sessions',
+    'files' => 'E:\\projects\\mp_works\\devmarcel\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -739,44 +633,43 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel_session',
+    'cookie' => 'devmarcel_session',
     'path' => '/',
     'domain' => NULL,
-    'secure' => NULL,
+    'secure' => false,
     'http_only' => true,
-    'same_site' => 'lax',
+    'same_site' => NULL,
   ),
-  'translatable' => 
+  'sweetalert' => 
   array (
-    'locales' => 
+    'cdn' => NULL,
+    'timer' => 5000,
+    'width' => '32rem',
+    'height_auto' => true,
+    'padding' => '1.25rem',
+    'animation' => 
     array (
-      0 => 'ru',
-      1 => 'en',
-      2 => 'ar',
+      'enable' => false,
     ),
-    'locale_separator' => '-',
-    'locale' => NULL,
-    'use_fallback' => false,
-    'use_property_fallback' => true,
-    'fallback_locale' => 'ru',
-    'translation_model_namespace' => NULL,
-    'translation_suffix' => 'Translation',
-    'locale_key' => 'locale',
-    'to_array_always_loads_translations' => true,
-    'rule_factory' => 
+    'animatecss' => 'https://cdn.jsdelivr.net/npm/animate.css',
+    'show_confirm_button' => true,
+    'show_close_button' => false,
+    'toast_position' => 'top-end',
+    'middleware' => 
     array (
-      'format' => 1,
-      'prefix' => '%',
-      'suffix' => '%',
+      'toast_position' => 'top-end',
+      'toast_close_button' => true,
+      'alert_auto_close' => 5000,
+      'auto_display_error_messages' => false,
     ),
   ),
   'view' => 
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\laravel\\New\\resources\\views',
+      0 => 'E:\\projects\\mp_works\\devmarcel\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\laravel\\New\\storage\\framework\\views',
+    'compiled' => 'E:\\projects\\mp_works\\devmarcel\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -784,7 +677,7 @@
     'reporting' => 
     array (
       'anonymize_ips' => true,
-      'collect_git_information' => false,
+      'collect_git_information' => true,
       'report_queries' => true,
       'maximum_number_of_collected_queries' => 200,
       'report_query_bindings' => true,
@@ -807,6 +700,10 @@
     'remote_sites_path' => '',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
+  ),
+  'image' => 
+  array (
+    'driver' => 'gd',
   ),
   'toastr' => 
   array (
